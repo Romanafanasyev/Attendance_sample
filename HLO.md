@@ -1,6 +1,7 @@
 ## I2 study
 ### Contributors:
 - Afanasyev Roman 311752 P3221
+- Gordeyko Mark 284144 P3221
 
 ### Description
 Web приложение, основной целью которого является улучшение системы проверки посещаемости в учебных заведениях, использующее систему “Clock in/out”
