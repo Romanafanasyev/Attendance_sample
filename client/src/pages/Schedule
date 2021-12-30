@@ -1,0 +1,71 @@
+import React, {useEffect, useState} from 'react';
+import {observer} from "mobx-react-lite";
+import ScheduleMaker from "../components/ScheduleMaker";
+import {Div} from "../components/Styles/StyledSchedule"
+import {getLessons, getSubjects} from "../http/stuffAPI";
+const Schedule = observer(() => {
+    const [schedule, setSchedule] = useState([])
+    const [subj, setSubj] = useState([])
+
+    useEffect(() => {
+        let cleanupFunction = false;
+        function createSchedule() {
+            getLessons().then(data => {if(!cleanupFunction) setSchedule(data);})
+            return schedule
+        }
+        createSchedule()
+        return () => cleanupFunction = true;
+    }, []);
+
+    useEffect(() => {
+        let cleanupFunction = false;
+        function createSubjects() {
+            getSubjects().then(data => {if(!cleanupFunction) setSubj(data);})
+            return subj
+        }
+        createSubjects()
+        return () => cleanupFunction = true;
+    }, []);
+    return (
+        <Div className={"limiter"}>
+            <Div className={"schedule"}>
+                <Div className={"try"}>
+                <Div className={"title-container"} >
+                    <h1>SCHEDULE</h1>
+                </Div>
+                <Div className={"schedule-container"}>
+                    <Div className={"weekday"}>
+                        <span>Понедельник</span>
+                        <ScheduleMaker day="1" lessons={schedule} subjects={subj}/>
+                    </Div>
+                    <Div className={"weekday"}>
+                        <span>Вторник</span>
+                        <ScheduleMaker day="2" lessons={schedule} subjects={subj}/>
+                    </Div>
+                    <Div className={"weekday"}>
+                        <span>Среда</span>
+                        <ScheduleMaker day="3" lessons={schedule} subjects={subj}/>
+                    </Div>
+                    <Div className={"weekday"}>
+                        <span>Четверг</span>
+                        <ScheduleMaker day="4" lessons={schedule} subjects={subj}/>
+                    </Div>
+                    <Div className={"weekday"}>
+                        <span>Пятница</span>
+                        <ScheduleMaker day="5" lessons={schedule} subjects={subj}/>
+                    </Div>
+                    <Div className={"weekday"}>
+                        <span>Суббота</span>
+                        <ScheduleMaker day="6" lessons={schedule} subjects={subj}/>
+                    </Div>
+                    <Div className={"weekday"}>
+                        <span>Воскресенье</span>
+                        <ScheduleMaker day="0" lessons={schedule} subjects={subj}/>
+                    </Div>
+                </Div>
+                </Div>
+            </Div>
+        </Div>
+    );
+});
+export default Schedule;
